@@ -1,0 +1,41 @@
+# 2 109 2     #Activate M splines 
+  # 1 121 5     #Set number of nodes to 5
+#----------------------------------------------
+# Sets variable catchability, periodicity, and penalty
+# -N 10 X     # Estimate time-series changes in catchability 1 = on, 0 = off
+# -N 15 X     # Penalty weight for catchability deviate prior weight = X, default is 50 (sd = 0.1)
+# -N 23 X     # Only have a catchability deviation if the no. of months since the last deviation is > X
+
+# JPPL catchability devs fsh(,15) don't matter when we actually have an index
+   -1 10 0    -1 15 0    -1 23  0	 
+   -2 10 1    -2 15 0    -2 23 23  
+   -3 10 0    -3 15 0    -3 23  0
+   -4 10 0    -4 15 0    -4 23  0	
+   -5 10 1    -5 15 0    -5 23 23
+   -6 10 0    -6 15 0    -6 23  0
+   -7 10 0    -7 15 0    -7 23  0
+   -8 10 1    -8 15 0    -8 23 23
+   -9 10 0    -9 15 0    -9 23  0		
+  -10 10 0   -10 15 0   -10 23  0    	
+  -11 10 0   -11 15 0   -11 23  0  	
+  -12 10 0   -12 15 0   -12 23  0	
+  -13 10 1   -13 15 0   -13 23 23	
+  -14 10 1   -14 15 0   -14 23 23
+  -15 10 1   -15 15 0   -15 23 23  
+  -16 10 0   -16 15 0   -16 23  0
+  -17 10 0   -17 15 0   -17 23  0	
+  -18 10 1   -18 15 0   -18 23 23	
+  -19 10 1   -19 15 0   -19 23 23
+  -20 10 1   -20 15 0   -20 23 23 	
+  -21 10 0   -21 15 0   -21 23  0	
+  -22 10 0   -22 15 0   -22 23  0
+  -23 10 0   -23 15 0   -23 23  0	
+  -24 10 0   -24 15 0   -24 23  0	
+  -25 10 1   -25 15 0   -25 23 23
+  -26 10 1   -26 15 0   -26 23 23	
+  -27 10 0   -27 15 0   -27 23  0	
+  -28 10 0   -28 15 0   -28 23  0	
+  -29 10 1   -29 15 0   -29 23 23
+  -30 10 1   -30 15 0   -30 23 23
+  -31 10 0   -31 15 0   -31 23  0
+

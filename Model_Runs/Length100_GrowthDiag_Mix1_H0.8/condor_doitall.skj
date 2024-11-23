@@ -1,0 +1,414 @@
+#!/bin/sh
+cd $_CONDOR_SCRATCH_DIR
+export PATH=.:$PATH
+export ADTMP1=.
+
+# ---------
+#  PHASE 0  - create the initial par file 
+# ---------
+if [ ! -f 00.par ]; then
+    $MFCL skj.frq skj.ini 00.par -makepar
+fi
+# ---------
+#  PHASE 1 
+# ---------
+if [ ! -f 01.par ]; then
+     $MFCL skj.frq 00.par 01.par -file - <<PHASE1
+#-------------------------------------------------------------------------------  
+#  Initial Phase Control option  
+  1 32 7         # control phase - keep growth parameters fixed
+#-------------------------------------------------------------------------------
+# Recruitment and Initial Population Settings 
+   1 149 100      # penalty on recruitment devs n/10 so for 100 = 1/sqrt(2*100/10) - CV ~ 0.22    
+   1 400 2        # set the last 2 recruitment deviates to 0
+   1 398 0        # Sets terminal recruitments at geometric mean 
+   2 113 0        # estimate initpop/totpop scaling parameter
+   2 177 1        # use old totpop scaling method
+   2 32 1         # totpop estimated from this phase   
+   2 57 4         # 4 recruitments per year
+   2 93 4         # 4 recruitments per year
+   2 94 2         # Use equilibium initial population
+   2 95 20        # Use average Z for first 20 periods for equil. init. pop.
+   # 2 116 100       #  value for rmax This is the maximum instantaneous fishing mortality in any one yr qtr, per fishery/region. 10 = 1.00 = F  #Didn't seem to work at all
+
+#-------------------------------------------------------------------------------
+# Likelihood Component
+   1 141 3        # Robust normal likelihood function for LF data
+   1 111 4        # Negative binomial likelihood function for tags
+   -999 49 100     # Divisor for LF sample sizes effective sample size 
+
+#-------------------------------------------------------------------------------
+# Tagging Related Flags
+#
+  -9999 1 1       # Tag returns for first period after release disregarded
+  -9999 2 0       # Zero means applying the tag_rep_rate in the tag catch calculation; 1 means we are excluding it
+  1 33 90         # Maximum tag reporting rate for all fisheries is 0.9
+  2 198 1         # Turn on release group reporting rates which are specified in the .ini
+  1 305 1 	  # Estimate the variance parameter of the negative binomial 
+  -999 43 1       # Var parameter estimated for all fisheries 
+  -999 44 1       # All fisheries grouped for estimating tag neg bin var parameter
+  2 96 12         # Tags are pooled across release groups after 12 periods   CHECK THIS - LOWER AND WOULD SPEED UP
+
+#-------------------------------------------------------------------------------
+# Estimate movement coefficients   
+  2 68 1         # Estimate movement parameters    
+  2 69 1         # Use movement parameters
+  2 27 1   	 #Set penalty for movement coefficient to 0.1
+#-------------------------------------------------------------------------------
+# Selectivity Settings
+#
+#  Fisheries with non-decreasing selectivity with age
+# -N 16 1  is selectivity shape   non decreasing for this fishery if == 1, zero if == 2
+# -N 3 X  is first age of common selectivity shape e.g same over X, X + 1 etc.
+# but note that this likely gets overwritten by ff(,57)
+   -3 16 1     -3 3 15        # The JP RES LL fisheries  are assumed to have non-decreasing selectivity common over ages 15 and 16
+   -6 16 1     -6 3 15        # Note that default is N_a - 1 = 15 anyway, but...   
+   -9 16 1     -9 3 15               
+  -17 16 1    -17 3 15
+  -21 16 1    -21 3 15
+  -23 16 1    -23 3 15
+  -27 16 1    -27 3 15
+  -31 16 1    -31 3 15
+
+# ------------------------------------------------------------------------------
+# Selectivity grouping  and form     1=logistic  2=doublenormal 3=cubic spine or length specific
+# -N 24 X is the selectivity grouping
+# -N 57 3 is cubic spline selectivity
+# -N 61 X establishes that there are X nodes in the spline
+  -1 24  1    -1 57 3     -1 61 4           
+  -2 24  2    -2 57 3     -2 61 4
+  -3 24  3    -3 57 1     -3 61 0
+  -4 24  1    -4 57 3     -4 61 4
+  -5 24  2    -5 57 3     -5 61 4
+  -6 24  3    -6 57 1     -6 61 0
+  -7 24  1    -7 57 3     -7 61 4
+  -8 24  2    -8 57 3     -8 61 4
+  -9 24  3    -9 57 1     -9 61 0
+ -10 24  4   -10 57 3    -10 61 6
+ -11 24  5   -11 57 3    -11 61 5
+ -12 24  6   -12 57 3    -12 61 5
+ -13 24  7   -13 57 3    -13 61 6
+ -14 24  8   -14 57 3    -14 61 4
+ -15 24  9   -15 57 3    -15 61 4
+ -16 24 10   -16 57 3    -16 61 5
+ -17 24 11   -17 57 1    -17 61 0
+ -18 24 12   -18 57 3    -18 61 4
+ -19 24  8   -19 57 3    -19 61 4
+ -20 24  9   -20 57 3    -20 61 4
+ -21 24 11   -21 57 1    -21 61 0
+ -22 24  1   -22 57 3    -22 61 4
+ -23 24  3   -23 57 1    -23 61 0   
+ -24 24  1   -24 57 3    -24 61 4 
+ -25 24  8   -25 57 3    -25 61 4 
+ -26 24  9   -26 57 3    -26 61 4 
+ -27 24 11   -27 57 1    -27 61 0 
+ -28 24  1   -28 57 3    -28 61 4 
+ -29 24  8   -29 57 3    -29 61 4 
+ -30 24  9   -30 57 3    -30 61 4 
+ -31 24 13   -31 57 1    -31 61 0 
+#Start selectivity estimate after specified age for LL fisheries
+  -3  75 2
+  -6  75 2
+  -9  75 2
+  -23 75 2
+  -21 75 2
+  -17 75 2
+  -27 75 2
+  -31 75 2
+ -999 26 2    # Use age-based select but ages w similar sizes penalized so sim select
+# 1 74 1      # Sets a generic penalty to stabilise db norm and logistic - uncomment if using these forms...
+
+#------------------------------------------------------------------------------- 
+#   Grouping of fisheries with common catchability -N 29 X
+#   Grouping of fisheries with common initial catchability -N 60 X
+   -1 29  1   -1 60  1
+   -2 29  2   -2 60  2
+   -3 29  3   -3 60  3
+   -4 29  4   -4 60  4
+   -5 29  5   -5 60  5
+   -6 29  6   -6 60  6
+   -7 29  7   -7 60  7
+   -8 29  8   -8 60  8
+   -9 29  9   -9 60  9
+  -10 29 10  -10 60 10
+  -11 29 11  -11 60 11
+  -12 29 12  -12 60 12
+  -13 29 13  -13 60 13
+  -14 29 14  -14 60 14
+  -15 29 15  -15 60 15
+  -16 29 16  -16 60 16
+  -17 29 17  -17 60 17
+  -18 29 18  -18 60 18
+  -19 29 19  -19 60 19
+  -20 29 20  -20 60 20
+  -21 29 21  -21 60 21
+  -22 29 22  -22 60 22
+  -23 29 23  -23 60 23
+  -24 29 24  -24 60 24
+  -25 29 25  -25 60 25
+  -26 29 26  -26 60 26
+  -27 29 27  -27 60 27
+  -28 29 28  -28 60 28
+  -29 29 29  -29 60 29
+  -30 29 30  -30 60 30
+  -31 29 31  -31 60 31
+
+#-------------------------------------------------------------------------------  
+#   Fishery groupings for tag return data
+   -1 32  1
+   -2 32  2
+   -3 32  3
+   -4 32  4
+   -5 32  5
+   -6 32  6
+   -7 32  7
+   -8 32  8
+   -9 32  9
+  -10 32 10
+  -11 32 11
+  -12 32 12
+  -13 32 13
+  -14 32 14
+  -15 32 14
+  -16 32 15
+  -17 32 16 
+  -18 32 17
+  -19 32 18
+  -20 32 18
+  -21 32 19
+  -22 32 20
+  -23 32 21
+  -24 32 22
+  -25 32 23
+  -26 32 23
+  -27 32 24
+  -28 32 25
+  -29 32 26
+  -30 32 26
+  -31 32 27
+  
+#---------------------------------------------- Penalties for effort deviations  (fsh 13 ) 
+#  should be set to the following values(as per NMD)
+#  1 for fisheries with standardised effort
+#  -3 for all other fisheries 
+#  10 for fisheries with no effort   *
+#
+#
+  -999 13 -3       
+# fisheries with No effort
+# LL 
+   -3 13 10      
+   -6 13 10 
+   -9 13 10      
+  -17 13 10        
+  -21 13 10
+  -23 13 10
+  -27 13 10
+  -31 13 10
+# Domestic PH VN and ID fisheries
+  -10 13 10
+  -11 13 10
+  -16 13 10
+# Need to check that there is no others...
+ 
+# Fisheries with Standardized effort - 1, 4, 9, 12, 18
+   -1 13 1 			# PL 1
+   -4 13 1			# PL 2
+   -7 13 1			# PL 3
+  -22 13 1       		# PL 4
+  -24 13 1			# PL 7
+  -28 13 1			# PL 9
+  -12 13 1       		# IDIDPHPH 5 
+  -19 13 1			# PS ASS 6
+
+#---------------------------------------------- FSH 66 is  time-varying effort wt (set internally)  
+#  Set to 1 only for fisheries with fish_flags(10)=0 (FSH 10 is  Estimate t-variant q); all others set to 0
+ -999 66 0      # turn off for all but those with standardised CPUE
+   -1 66 1                      # PL 1      
+   -4 66 1                      # PL 2             
+   -7 66 1                      # PL 3      
+  -22 66 1                      # PL 4             
+  -24 66 1                      # PL 7      
+  -28 66 1                      # PL 9      
+  -12 66 1                      # IDIDPHPH 5
+  -19 66 1                      # PS ASS 6  
+# Turn on weighted spline for calculating maturity at age from length observations   
+  2 188 2 		
+
+PHASE1
+fi
+# ---------
+#  PHASE 2 
+# ---------
+if [ ! -f 02.par ]; then
+    $MFCL skj.frq 01.par 02.par -file - <<PHASE2
+    1 1 500        # Sets no. of function evaluations for this phase
+    1 50 -1        # convergence criterion is 1E+1
+    2 35 12        # Effort deviate boundary OFTEN 6 OR 8 for BET/YFT CHECK plot.rep 2 C IF ANY DEVS ON BOUNDS
+    2 34 1         # Turn on eff. devs
+  -999 4 4         # Estimate effort deviates (used for specific fisheries) 
+    -999 45 100000   # Catch likelihood penalty  
+    #Except for the LL fisheries give less penalties because catch is made up
+    -3 45 1000
+    -6 45 1000
+    -9 45 1000
+    -17 45 1000
+    -21 45 1000
+    -23 45 1000
+    -27 45 1000
+    -31 45 1000
+    -999 14 20 	  # Restrict F for any individual fishing incident to n/10  i.e. 20=2
+
+PHASE2
+fi
+#
+# ---------
+#  PHASE 3
+# ---------
+if [ ! -f 03.par ]; then
+    $MFCL skj.frq 02.par 03.par -file - <<PHASE3
+   
+  2 70 1        # Estimate time-series changes in recruitment distribution
+  2 71 1        # est. time series of reg recruitment
+  2 178 1       # constraint on regional recruitments
+
+PHASE3
+fi
+#
+# ---------
+#  PHASE 4 
+# ---------
+if [ ! -f 04.par ]; then
+    $MFCL skj.frq 03.par 04.par -file - <<PHASE4
+# Estimate seasonal catchability for all fisheries
+ -999 27 1        
+# except  the LL fisheries
+   -3 27 0
+   -6 27 0       
+   -9 27 0
+  -17 27 0       
+  -21 27 0
+  -23 27 0
+  -27 27 0
+  -31 27 0
+# except for fisheries with annual catch - 3 miscs and PH/ID seine 
+ -10 27 0         
+ -11 27 0         
+ -12 27 0         
+ -16 27 0
+
+PHASE4
+fi
+#
+# ---------
+#  PHASE 5
+# ---------
+if [ ! -f 05.par ]; then
+    $MFCL skj.frq 04.par 05.par -file - <<PHASE5
+  # 2 109 2     #Activate M splines 
+  # 1 121 5     #Set number of nodes to 5
+#----------------------------------------------
+# Sets variable catchability, periodicity, and penalty
+# -N 10 X     # Estimate time-series changes in catchability 1 = on, 0 = off
+# -N 15 X     # Penalty weight for catchability deviate prior weight = X, default is 50 (sd = 0.1)
+# -N 23 X     # Only have a catchability deviation if the no. of months since the last deviation is > X
+
+# JPPL catchability devs fsh(,15) don't matter when we actually have an index
+   -1 10 0    -1 15 0    -1 23  0	 
+   -2 10 1    -2 15 0    -2 23 23  
+   -3 10 0    -3 15 0    -3 23  0
+   -4 10 0    -4 15 0    -4 23  0	
+   -5 10 1    -5 15 0    -5 23 23
+   -6 10 0    -6 15 0    -6 23  0
+   -7 10 0    -7 15 0    -7 23  0
+   -8 10 1    -8 15 0    -8 23 23
+   -9 10 0    -9 15 0    -9 23  0		
+  -10 10 0   -10 15 0   -10 23  0    	
+  -11 10 0   -11 15 0   -11 23  0  	
+  -12 10 0   -12 15 0   -12 23  0	
+  -13 10 1   -13 15 0   -13 23 23	
+  -14 10 1   -14 15 0   -14 23 23
+  -15 10 1   -15 15 0   -15 23 23  
+  -16 10 0   -16 15 0   -16 23  0
+  -17 10 0   -17 15 0   -17 23  0	
+  -18 10 1   -18 15 0   -18 23 23	
+  -19 10 1   -19 15 0   -19 23 23
+  -20 10 1   -20 15 0   -20 23 23 	
+  -21 10 0   -21 15 0   -21 23  0	
+  -22 10 0   -22 15 0   -22 23  0
+  -23 10 0   -23 15 0   -23 23  0	
+  -24 10 0   -24 15 0   -24 23  0	
+  -25 10 1   -25 15 0   -25 23 23
+  -26 10 1   -26 15 0   -26 23 23	
+  -27 10 0   -27 15 0   -27 23  0	
+  -28 10 0   -28 15 0   -28 23  0	
+  -29 10 1   -29 15 0   -29 23 23
+  -30 10 1   -30 15 0   -30 23 23
+  -31 10 0   -31 15 0   -31 23  0
+
+
+PHASE5
+fi
+#
+# ----------
+#  PHASE 6 
+# ----------
+if [ ! -f 06.par ]; then
+    $MFCL skj.frq 05.par 06.par -file - <<PHASE6
+  #  Estimate regional distribution of recruitment           
+  -100000 1 1                             
+  -100000 2 1 
+  -100000 3 1 
+  -100000 4 1 
+  -100000 5 1 
+  -100000 6 1 
+  -100000 7 1
+  -100000 8 1 
+
+
+PHASE6
+fi
+#
+# ----------
+#  PHASE 7
+# ----------
+if [ ! -f 07.par ]; then
+    $MFCL skj.frq 06.par 07.par -file - <<PHASE7
+  1 1 25000         # How many function evaluations
+  2 145 -1          # Penalty wt. for SRR  TEST SENSITIVITY - TRY USING 1 to -3
+  2 146 1           # Make SRR parameters active
+  2 147 1           # No. time periods for recruitment lag
+  2 182 1 	    # Annualized recrutments and average biomass
+  2 148 20          # Years (year quarters) from last year for avg. F  
+  2 155 4           # But not including last 4
+  1 149 0           # Turn off recruitment penalties against mean - frees up recruitment - should improve fit to compositions
+  2 162 0           # Estimate steepness 0 IS THE DEFAULT   meaning not estimated
+  2 163 0           # BH-SRR is parameterised using steepness. Value of 0 IS THE DEFAULT meaning it is parameterized with steepness
+  2 199 148         # start time period for yield calculation [4.5.11], made consistent with 2014 assessment - starts in 1982
+  2 200 4           # end time period for yield calculation [4.5.11]
+  -999 55 1         # Turn off fisheries for impact analysis [4.5.14]
+  2 193 1           # Turn on fisheries impact analyses
+  1 50 -3           # Convergence criteria - if acheived phase will terminate before full no. evaluations made
+  2 171 1           # Unfished calculations by estimated recruitment or SRR [4.5.14]
+  2 161 1           # Turn on the bias correction for the Beverton-Holt
+  1 190 1           # Write plot.rep
+  1 186 1           # Write fishmort and plotq0.rep
+  1 187 1           # Write temporary_tag_report
+  1 188 1           # Write ests.rep
+  1 189 1           # Write .fit files
+  -999 45 10000   # Catch likelihood penalty  
+  #Except for the LL fisheries give less penalties because catch is made up
+  -3 45 500
+  -6 45 500
+  -9 45 500
+  -17 45 500
+  -21 45 500
+  -23 45 500
+  -27 45 500
+  -31 45 500
+  2 109 2     #Activate M splines 
+  1 121 5     #Set number of nodes to 5
+
+PHASE7
+fi
+

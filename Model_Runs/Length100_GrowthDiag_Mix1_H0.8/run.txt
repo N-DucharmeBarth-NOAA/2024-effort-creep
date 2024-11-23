@@ -1,0 +1,4 @@
+Length Scalar :  100 
+Growth Function :  Diag 
+Tag Mixing Period Quarters :  1 
+Spawner-Recruit Relationship Steepness :  0.8

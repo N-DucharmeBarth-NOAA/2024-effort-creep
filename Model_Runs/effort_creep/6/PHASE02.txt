@@ -1,0 +1,16 @@
+ 1 1 500        # Sets no. of function evaluations for this phase
+    1 50 -1        # convergence criterion is 1E+1
+    2 35 12        # Effort deviate boundary OFTEN 6 OR 8 for BET/YFT CHECK plot.rep 2 C IF ANY DEVS ON BOUNDS
+    2 34 1         # Turn on eff. devs
+  -999 4 4         # Estimate effort deviates (used for specific fisheries) 
+    -999 45 100000   # Catch likelihood penalty  
+    #Except for the LL fisheries give less penalties because catch is made up
+    -3 45 1000
+    -6 45 1000
+    -9 45 1000
+    -17 45 1000
+    -21 45 1000
+    -23 45 1000
+    -27 45 1000
+    -31 45 1000
+    -999 14 20 	  # Restrict F for any individual fishing incident to n/10  i.e. 20=2

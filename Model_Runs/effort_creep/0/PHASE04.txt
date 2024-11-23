@@ -1,0 +1,16 @@
+# Estimate seasonal catchability for all fisheries
+ -999 27 1        
+# except  the LL fisheries
+   -3 27 0
+   -6 27 0       
+   -9 27 0
+  -17 27 0       
+  -21 27 0
+  -23 27 0
+  -27 27 0
+  -31 27 0
+# except for fisheries with annual catch - 3 miscs and PH/ID seine 
+ -10 27 0         
+ -11 27 0         
+ -12 27 0         
+ -16 27 0

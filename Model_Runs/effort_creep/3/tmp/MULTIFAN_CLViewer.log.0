@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="windows-1252" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2022-03-29T21:06:10.566974Z</date>
+  <millis>1648587970566</millis>
+  <nanos>974000</nanos>
+  <sequence>0</sequence>
+  <logger>org.spc.ofp.project.mfcl.viewer</logger>
+  <level>INFO</level>
+  <class>org.spc.ofp.project.mfcl.viewer.scene.control.welcome.WelcomePaneController</class>
+  <method>lambda$loadRecentListAsync$17</method>
+  <thread>18</thread>
+  <message>Recent files service succeeded.</message>
+</record>
+<record>
+  <date>2022-03-29T21:06:11.375794500Z</date>
+  <millis>1648587971375</millis>
+  <nanos>794500</nanos>
+  <sequence>1</sequence>
+  <logger>org.spc.ofp.project.mfcl.viewer.scene.control.chartpage.ChartPage</logger>
+  <level>INFO</level>
+  <class>org.spc.ofp.project.mfcl.viewer.scene.control.chartpage.ChartPage</class>
+  <method>seekCharts</method>
+  <thread>27</thread>
+  <message>seekCharts: species Species 1 [ 0 - 7 ] generated in 47 ms.</message>
+</record>
+<record>
+  <date>2022-03-29T21:06:11.381276700Z</date>
+  <millis>1648587971381</millis>
+  <nanos>276700</nanos>
+  <sequence>2</sequence>
+  <logger>org.spc.ofp.project.mfcl.viewer.scene.control.chartpage.ChartPage</logger>
+  <level>INFO</level>
+  <class>org.spc.ofp.project.mfcl.viewer.scene.control.chartpage.ChartPage</class>
+  <method>seekCharts</method>
+  <thread>27</thread>
+  <message>seekCharts: all categories generated in 53 ms.</message>
+</record>
+<record>
+  <date>2022-03-29T21:06:15.063973200Z</date>
+  <millis>1648587975063</millis>
+  <nanos>973200</nanos>
+  <sequence>3</sequence>
+  <logger>org.spc.ofp.project.mfcl.viewer.scene.control.chartpage.ChartPage</logger>
+  <level>INFO</level>
+  <class>org.spc.ofp.project.mfcl.viewer.scene.control.chartpage.ChartPage</class>
+  <method>seekCharts</method>
+  <thread>28</thread>
+  <message>seekCharts: species Species 1 [ 0 - 8 ] generated in 24 ms.</message>
+</record>
+<record>
+  <date>2022-03-29T21:06:15.064969800Z</date>
+  <millis>1648587975064</millis>
+  <nanos>969800</nanos>
+  <sequence>4</sequence>
+  <logger>org.spc.ofp.project.mfcl.viewer.scene.control.chartpage.ChartPage</logger>
+  <level>INFO</level>
+  <class>org.spc.ofp.project.mfcl.viewer.scene.control.chartpage.ChartPage</class>
+  <method>seekCharts</method>
+  <thread>28</thread>
+  <message>seekCharts: all categories generated in 25 ms.</message>
+</record>
+<record>
+  <date>2022-03-29T21:06:23.588134Z</date>
+  <millis>1648587983588</millis>
+  <nanos>134000</nanos>
+  <sequence>5</sequence>
+  <logger>org.spc.ofp.project.mfcl.viewer.scene.control.chartpage.ChartPage</logger>
+  <level>INFO</level>
+  <class>org.spc.ofp.project.mfcl.viewer.scene.control.chartpage.ChartPage</class>
+  <method>seekCharts</method>
+  <thread>29</thread>
+  <message>seekCharts: species null [ 0 - 0 ] generated in 5 ms.</message>
+</record>
+<record>
+  <date>2022-03-29T21:06:23.589131100Z</date>
+  <millis>1648587983589</millis>
+  <nanos>131100</nanos>
+  <sequence>6</sequence>
+  <logger>org.spc.ofp.project.mfcl.viewer.scene.control.chartpage.ChartPage</logger>
+  <level>INFO</level>
+  <class>org.spc.ofp.project.mfcl.viewer.scene.control.chartpage.ChartPage</class>
+  <method>seekCharts</method>
+  <thread>29</thread>
+  <message>seekCharts: all categories generated in 5 ms.</message>
+</record>
+<record>
+  <date>2022-03-29T21:06:31.777735500Z</date>
+  <millis>1648587991777</millis>
+  <nanos>735500</nanos>
+  <sequence>7</sequence>
+  <logger>org.spc.ofp.project.mfcl.viewer.scene.control.chartpage.ChartPage</logger>
+  <level>INFO</level>
+  <class>org.spc.ofp.project.mfcl.viewer.scene.control.chartpage.ChartPage</class>
+  <method>seekCharts</method>
+  <thread>30</thread>
+  <message>seekCharts: species Species 1 [ 0 - 8 ] generated in 19 ms.</message>
+</record>
+<record>
+  <date>2022-03-29T21:06:31.777735500Z</date>
+  <millis>1648587991777</millis>
+  <nanos>735500</nanos>
+  <sequence>8</sequence>
+  <logger>org.spc.ofp.project.mfcl.viewer.scene.control.chartpage.ChartPage</logger>
+  <level>INFO</level>
+  <class>org.spc.ofp.project.mfcl.viewer.scene.control.chartpage.ChartPage</class>
+  <method>seekCharts</method>
+  <thread>30</thread>
+  <message>seekCharts: all categories generated in 19 ms.</message>
+</record>
+<record>
+  <date>2022-03-29T21:06:51.907126200Z</date>
+  <millis>1648588011907</millis>
+  <nanos>126200</nanos>
+  <sequence>9</sequence>
+  <logger>org.spc.ofp.project.mfcl.viewer.scene.control.chartpage.ChartPage</logger>
+  <level>INFO</level>
+  <class>org.spc.ofp.project.mfcl.viewer.scene.control.chartpage.ChartPage</class>
+  <method>seekCharts</method>
+  <thread>31</thread>
+  <message>seekCharts: species Species 1 [ 0 - 9 ] generated in 36 ms.</message>
+</record>
+<record>
+  <date>2022-03-29T21:06:51.907126200Z</date>
+  <millis>1648588011907</millis>
+  <nanos>126200</nanos>
+  <sequence>10</sequence>
+  <logger>org.spc.ofp.project.mfcl.viewer.scene.control.chartpage.ChartPage</logger>
+  <level>INFO</level>
+  <class>org.spc.ofp.project.mfcl.viewer.scene.control.chartpage.ChartPage</class>
+  <method>seekCharts</method>
+  <thread>31</thread>
+  <message>seekCharts: all categories generated in 36 ms.</message>
+</record>
+</log>

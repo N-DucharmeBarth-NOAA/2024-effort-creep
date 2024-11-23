@@ -1,0 +1,3 @@
+ 2 70 1        # Estimate time-series changes in recruitment distribution
+  2 71 1        # est. time series of reg recruitment
+  2 178 1       # constraint on regional recruitments
